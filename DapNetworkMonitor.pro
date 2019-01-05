@@ -41,7 +41,7 @@ android {
 }
 
 macos {
-    include(macos/macos.pri)
+    include(darwin/darwin.pri)
 }
 
 
