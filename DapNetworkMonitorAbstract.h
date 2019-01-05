@@ -3,12 +3,12 @@
 
 #include <QObject>
 
-class NetworkMonitorAbstract : public QObject
+class DapNetworkMonitorAbstract : public QObject
 {
     Q_OBJECT
 public:
-    explicit NetworkMonitorAbstract(QObject *parent = nullptr);
-    virtual ~NetworkMonitorAbstract(){}
+    explicit DapNetworkMonitorAbstract(QObject *parent = nullptr);
+    virtual ~DapNetworkMonitorAbstract(){}
 signals:
 
 public slots:

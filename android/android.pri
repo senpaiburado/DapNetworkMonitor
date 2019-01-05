@@ -1,7 +1,7 @@
 INCLUDEPATH += $$PWD
 
 SOURCES += \
-    $$PWD/NetworkMonitorAndroid.cpp
+    $$PWD/DapNetworkMonitorAndroid.cpp
 
 HEADERS += \
-    $$PWD/NetworkMonitorAndroid.h
+    $$PWD/DapNetworkMonitorAndroid.h

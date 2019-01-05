@@ -1,7 +1,7 @@
 INCLUDEPATH += $$PWD
 
 SOURCES += \
-    $$PWD/NetworkMonitorMacos.cpp
+    $$PWD/DapNetworkMonitorMacOS.cpp
 
 HEADERS += \
-    $$PWD/NetworkMonitorMacos.h
+    $$PWD/DapNetworkMonitorMacOS.h

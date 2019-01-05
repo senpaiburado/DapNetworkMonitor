@@ -7,7 +7,7 @@
 
 QT       -= gui
 CONFIG += c++14
-TARGET = NetworkMonitor
+TARGET = DapNetworkMonitor
 TEMPLATE = lib
 CONFIG += staticlib
 
@@ -23,10 +23,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        NetworkMonitorAbstract.cpp
+    DapNetworkMonitorAbstract.cpp
 
 HEADERS += \
-        NetworkMonitorAbstract.h
+    DapNetworkMonitorAbstract.h
 
 win32 {
     include(windows/windows.pri)

@@ -1,7 +1,7 @@
 INCLUDEPATH += $$PWD
 
 SOURCES += \
-    $$PWD/NetworkMonitorWindows.cpp
+    $$PWD/DapNetworkMonitorWindows.cpp
 
 HEADERS += \
-    $$PWD/NetworkMonitorWindows.h
+    $$PWD/DapNetworkMonitorWindows.h

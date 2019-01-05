@@ -1,7 +1,7 @@
 INCLUDEPATH += $$PWD
 
 SOURCES += \
-    $$PWD/NetworkMonitorLinux.cpp
+    $$PWD/DapNetworkMonitorLinux.cpp
 
 HEADERS += \
-    $$PWD/NetworkMonitorLinux.h
+    $$PWD/DapNetworkMonitorLinux.h
