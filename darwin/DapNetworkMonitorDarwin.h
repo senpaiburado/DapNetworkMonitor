@@ -3,11 +3,11 @@
 
 #include "DapNetworkMonitorAbstract.h"
 
-class DapNetworkMonitorMacOS : public DapNetworkMonitorAbstract
+class DapNetworkMonitorDarwin : public DapNetworkMonitorAbstract
 {
     Q_OBJECT
 public:
-    explicit DapNetworkMonitorMacOS(DapNetworkMonitorAbstract *parent = nullptr);
+    explicit DapNetworkMonitorDarwin(DapNetworkMonitorAbstract *parent = nullptr);
 
 signals:
 
