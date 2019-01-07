@@ -7,9 +7,7 @@ class DapNetworkMonitorDarwin : public DapNetworkMonitorAbstract
 {
     Q_OBJECT
 public:
-    explicit DapNetworkMonitorDarwin(const QString& dapVpnGateway,
-                                     const QString& upstreamDapServerAddress,
-                                     QObject *parent = Q_NULLPTR);
+    explicit DapNetworkMonitorDarwin(QObject *parent = Q_NULLPTR);
 
     bool isTunDriverInstalled() const override;
     bool isDapGatewayDefined() const override;

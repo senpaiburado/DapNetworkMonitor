@@ -1,9 +1,7 @@
 #include "DapNetworkMonitorLinux.h"
 
-DapNetworkMonitorLinux::DapNetworkMonitorLinux(const QString& dapVpnGateway,
-                                               const QString& upstreamDapServerAddress,
-                                               QObject *parent):
-    DapNetworkMonitorAbstract(dapVpnGateway, upstreamDapServerAddress, parent)
+DapNetworkMonitorLinux::DapNetworkMonitorLinux(QObject *parent):
+    DapNetworkMonitorAbstract(parent)
 {
 
 }
@@ -22,6 +20,7 @@ bool DapNetworkMonitorLinux::isDapGatewayDefined() const
 bool DapNetworkMonitorLinux::isOthersGatewayDefined() const
 {
     // TODO
+    // Add checking all needed parameters for successful monitoring
     return false;
 }
 

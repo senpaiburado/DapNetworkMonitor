@@ -1,9 +1,7 @@
 #include "DapNetworkMonitorWindows.h"
 
-DapNetworkMonitorWindows::DapNetworkMonitorWindows(const QString& dapVpnGateway,
-                                                   const QString& upstreamDapServerAddress,
-                                                   QObject *parent):
-    DapNetworkMonitorAbstract(dapVpnGateway, upstreamDapServerAddress, parent)
+DapNetworkMonitorWindows::DapNetworkMonitorWindows(QObject *parent):
+    DapNetworkMonitorAbstract(parent)
 {
 
 }
@@ -22,6 +20,7 @@ bool DapNetworkMonitorWindows::isDapGatewayDefined() const
 bool DapNetworkMonitorWindows::isOthersGatewayDefined() const
 {
     // TODO
+    // Add checking all needed parameters for successful monitoring
     return false;
 }
 

@@ -8,12 +8,13 @@ class DapNetworkMonitorAbstract : public QObject
 {
     Q_OBJECT
 protected:
-    QString m_dapVpnGateway;
-    QString m_upstreamDapServerAddress;
+    // default gateway before install tunneling
+    QString m_defaultGateway;
+
+    QString m_tunnelDestination;
+    QString m_serverAddress;
 public:
-    explicit DapNetworkMonitorAbstract(const QString& dapVpnGateway,
-                                       const QString& upstreamDapServerAddress,
-                                       QObject *parent = Q_NULLPTR);
+    explicit DapNetworkMonitorAbstract(QObject *parent = Q_NULLPTR);
 
     virtual ~DapNetworkMonitorAbstract() {}
 
@@ -33,9 +34,9 @@ signals:
     void sigUpstreamRouteDefined();
 
 public slots:
-    void onDapVpnGatewayChanged(const QString& gw) { m_dapVpnGateway = gw;}
-    void onUpstreamDapServerAddressChanged(const QString& upstreamAddr)
-    { m_upstreamDapServerAddress = upstreamAddr; }
+    void sltSetDefaultGateway(const QString& gw) { m_defaultGateway = gw; }
+    void sltSetServerAddress(const QString& servAddr) { m_serverAddress = servAddr; }
+    void sltSetTunnelDestination(const QString& tunDest) { m_tunnelDestination = tunDest; }
 };
 
 #endif // NETWORKMONITORABSTRACT_H

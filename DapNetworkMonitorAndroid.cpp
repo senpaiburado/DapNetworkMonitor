@@ -1,9 +1,7 @@
 #include "DapNetworkMonitorAndroid.h"
 
-DapNetworkMonitorAndroid::DapNetworkMonitorAndroid(const QString& dapVpnGateway,
-                                                   const QString& upstreamDapServerAddress,
-                                                   QObject *parent):
-    DapNetworkMonitorAbstract(dapVpnGateway, upstreamDapServerAddress, parent)
+DapNetworkMonitorAndroid::DapNetworkMonitorAndroid(QObject *parent):
+    DapNetworkMonitorAbstract(parent)
 {
 
 }
@@ -28,6 +26,7 @@ bool DapNetworkMonitorAndroid::isOthersGatewayDefined() const
 bool DapNetworkMonitorAndroid::monitoringStart()
 {
     // TODO
+    // Add checking all needed parameters for successful monitoring
     return false;
 }
 bool DapNetworkMonitorAndroid::monitoringStop()

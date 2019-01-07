@@ -1,9 +1,7 @@
 #include "DapNetworkMonitorDarwin.h"
 
-DapNetworkMonitorDarwin::DapNetworkMonitorDarwin(const QString& dapVpnGateway,
-                                                 const QString& upstreamDapServerAddress,
-                                                 QObject *parent):
-    DapNetworkMonitorAbstract(dapVpnGateway, upstreamDapServerAddress, parent)
+DapNetworkMonitorDarwin::DapNetworkMonitorDarwin(QObject *parent):
+    DapNetworkMonitorAbstract(parent)
 {
 
 }
@@ -28,6 +26,7 @@ bool DapNetworkMonitorDarwin::isOthersGatewayDefined() const
 bool DapNetworkMonitorDarwin::monitoringStart()
 {
     // TODO
+    // Add checking all needed parameters for successful monitoring
     return false;
 }
 bool DapNetworkMonitorDarwin::monitoringStop()

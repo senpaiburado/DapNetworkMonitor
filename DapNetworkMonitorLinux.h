@@ -7,9 +7,7 @@ class DapNetworkMonitorLinux : public DapNetworkMonitorAbstract
 {
     Q_OBJECT
 public:
-    explicit DapNetworkMonitorLinux(const QString& dapVpnGateway,
-                                    const QString& upstreamDapServerAddress,
-                                    QObject *parent = Q_NULLPTR);
+    explicit DapNetworkMonitorLinux(QObject *parent = Q_NULLPTR);
 
     bool isTunDriverInstalled() const override;
     bool isDapGatewayDefined() const override;
