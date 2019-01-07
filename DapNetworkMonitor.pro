@@ -24,26 +24,28 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     DapNetworkMonitorAbstract.cpp
-
 HEADERS += \
     DapNetworkMonitorAbstract.h
 
 win32 {
-    include(windows/windows.pri)
+SOURCES += DapNetworkMonitorWindows.cpp
+HEADERS += DapNetworkMonitorWindows.h
 }
 
 linux-*: !android {
-    include(linux/linux.pri)
+SOURCES += DapNetworkMonitorLinux.cpp
+HEADERS += DapNetworkMonitorLinux.h
 }
 
 android {
-    include(android/android.pri)
+SOURCES += DapNetworkMonitorAndroid.cpp
+HEADERS += DapNetworkMonitorAndroid.h
 }
 
 macos {
-    include(darwin/darwin.pri)
+SOURCES += DapNetworkMonitorDarwin.cpp
+HEADERS += DapNetworkMonitorDarwin.h
 }
-
 
 unix {
     target.path = /usr/lib
