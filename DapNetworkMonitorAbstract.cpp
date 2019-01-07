@@ -1,7 +1,12 @@
 #include "DapNetworkMonitorAbstract.h"
 
 
-DapNetworkMonitorAbstract::DapNetworkMonitorAbstract(QObject *parent)
+DapNetworkMonitorAbstract::DapNetworkMonitorAbstract(const QString& dapVpnGateway,
+                                                     const QString& upstreamDapServerAddress,
+                                                     QObject *parent)
+    : QObject(parent), m_dapVpnGateway(dapVpnGateway), m_upstreamDapServerAddress(upstreamDapServerAddress)
 {
-    Q_UNUSED(parent);
+    if(dapVpnGateway.isEmpty() || upstreamDapServerAddress.isEmpty()) {
+        qCritical() << "Gateway or upstreamAddress is empty";
+    }
 }

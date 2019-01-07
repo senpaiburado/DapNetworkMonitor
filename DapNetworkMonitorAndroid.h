@@ -7,8 +7,15 @@ class DapNetworkMonitorAndroid : public DapNetworkMonitorAbstract
 {
     Q_OBJECT
 public:
-    explicit DapNetworkMonitorAndroid(DapNetworkMonitorAbstract *parent = nullptr);
+    explicit DapNetworkMonitorAndroid(const QString& dapVpnGateway,
+                                      const QString& upstreamDapServerAddress,
+                                      QObject *parent = Q_NULLPTR);
 
+    bool isTunDriverInstalled() const override;
+    bool isDapGatewayDefined() const override;
+    bool isOthersGatewayDefined() const override;
+    bool monitoringStart() override;
+    bool monitoringStop() override;
 signals:
 
 public slots:
