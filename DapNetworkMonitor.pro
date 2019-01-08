@@ -23,10 +23,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    DapNetworkMonitorAbstract.cpp
+    DapNetworkMonitorAbstract.cpp \
+    DapMonitorProgram.cpp
 HEADERS += \
     DapNetworkMonitor.h \
-    DapNetworkMonitorAbstract.h
+    DapNetworkMonitorAbstract.h \
+    DapMonitorProgram.h
 
 win32 {
 SOURCES += DapNetworkMonitorWindows.cpp
