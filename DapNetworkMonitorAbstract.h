@@ -13,6 +13,8 @@ protected:
 
     QString m_tunnelDestination;
     QString m_serverAddress;
+
+    bool m_isMonitoringRunning;
 public:
     explicit DapNetworkMonitorAbstract(QObject *parent = Q_NULLPTR);
 
@@ -21,10 +23,8 @@ public:
     virtual bool isTunDriverInstalled() const = 0;
     virtual bool isDapGatewayDefined() const = 0;
     virtual bool isOthersGatewayDefined() const = 0;
+    virtual bool isMonitoringRunning() const = 0;
 
-    // Returns true if operation successfully
-    virtual bool monitoringStart() = 0;
-    virtual bool monitoringStop() = 0;
 signals:
     void sigRouteChanged();
     void sigOtherGatewaysDefined();
@@ -33,10 +33,18 @@ signals:
     void sigDapGatewayUndefined();
     void sigUpstreamRouteDefined();
 
+    void sigMonitoringFinished();
+    void sigMonitoringStarted();
+    void sigMonitoringStartError();
+
 public slots:
     void sltSetDefaultGateway(const QString& gw) { m_defaultGateway = gw; }
     void sltSetServerAddress(const QString& servAddr) { m_serverAddress = servAddr; }
     void sltSetTunnelDestination(const QString& tunDest) { m_tunnelDestination = tunDest; }
+
+    virtual void monitoringStart() = 0;
+    virtual void monitoringStop() = 0;
 };
+
 
 #endif // NETWORKMONITORABSTRACT_H

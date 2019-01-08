@@ -4,5 +4,5 @@
 DapNetworkMonitorAbstract::DapNetworkMonitorAbstract(QObject *parent)
     : QObject(parent)
 {
-
+    m_isMonitoringRunning = false;
 }

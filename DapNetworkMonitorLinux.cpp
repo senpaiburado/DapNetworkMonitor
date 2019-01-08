@@ -1,7 +1,7 @@
 #include "DapNetworkMonitorLinux.h"
 
 DapNetworkMonitorLinux::DapNetworkMonitorLinux(QObject *parent):
-    DapNetworkMonitorAbstract(parent)
+    DapNetworkMonitorAbstract(parent), m_process("ip", {"monitor"}, this)
 {
 
 }
@@ -20,17 +20,23 @@ bool DapNetworkMonitorLinux::isDapGatewayDefined() const
 bool DapNetworkMonitorLinux::isOthersGatewayDefined() const
 {
     // TODO
-    // Add checking all needed parameters for successful monitoring
     return false;
 }
 
-bool DapNetworkMonitorLinux::monitoringStart()
+bool DapNetworkMonitorLinux::isMonitoringRunning() const
 {
     // TODO
     return false;
 }
-bool DapNetworkMonitorLinux::monitoringStop()
+
+void DapNetworkMonitorLinux::monitoringStart()
 {
-    // TODO
-    return false;
+    qDebug() << "Start network monitoring";
+    m_process.start();
+}
+
+void DapNetworkMonitorLinux::monitoringStop()
+{
+    qDebug() << "Stop network monitoring";
+    m_process.stop();
 }
