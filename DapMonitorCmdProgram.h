@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QProcess>
 
-class DapMonitorProgram : public QObject
+class DapMonitorCmdProgram : public QObject
 {
     Q_OBJECT
 private:
@@ -17,7 +17,7 @@ private:
     bool m_isRunning = false;
     char m_outputBuffer[MAX_LINE_LENGTH];
 public:
-    explicit DapMonitorProgram(const QString& name, const QStringList& args, QObject *parent = nullptr);
+    explicit DapMonitorCmdProgram(const QString& name, const QStringList& args, QObject *parent = nullptr);
 
     bool isProgramRunning() { return m_isRunning; }
 signals:

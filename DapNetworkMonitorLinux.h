@@ -2,13 +2,13 @@
 #define NETWORKMONITORLINUX_H
 
 #include "DapNetworkMonitorAbstract.h"
-#include "DapMonitorProgram.h"
+#include "DapMonitorCmdProgram.h"
 
 class DapNetworkMonitorLinux : public DapNetworkMonitorAbstract
 {
     Q_OBJECT
 private:
-    DapMonitorProgram m_process;
+    DapMonitorCmdProgram m_cmdProgram;
 public:
     explicit DapNetworkMonitorLinux(QObject *parent = Q_NULLPTR);
 

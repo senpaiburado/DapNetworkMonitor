@@ -1,6 +1,6 @@
-#include "DapMonitorProgram.h"
+#include "DapMonitorCmdProgram.h"
 
-DapMonitorProgram::DapMonitorProgram(const QString& name,
+DapMonitorCmdProgram::DapMonitorCmdProgram(const QString& name,
                                      const QStringList& args,
                                      QObject *parent)
     : QObject(parent), m_name(name), m_args(args)
@@ -8,14 +8,14 @@ DapMonitorProgram::DapMonitorProgram(const QString& name,
 
 }
 
-void DapMonitorProgram::sltProcessFinished()
+void DapMonitorCmdProgram::sltProcessFinished()
 {
     qDebug() << "sltProcessFinished";
     m_isRunning = false;
     m_process->deleteLater();
 }
 
-void DapMonitorProgram::sltMonitorParser()
+void DapMonitorCmdProgram::sltMonitorParser()
 {
     while (!m_process->atEnd()) {
         qint64 count_bytes = m_process->readLine(m_outputBuffer, MAX_LINE_LENGTH);
@@ -32,7 +32,7 @@ void DapMonitorProgram::sltMonitorParser()
     }
 }
 
-void DapMonitorProgram::start()
+void DapMonitorCmdProgram::start()
 {
     if(m_isRunning) {
         qWarning() << "Can't start monitoring. He is already started";
@@ -41,7 +41,7 @@ void DapMonitorProgram::start()
     m_process = new QProcess(this);
 
     connect(m_process,static_cast<void (QProcess::*)(int)>(&QProcess::finished),
-            this, &DapMonitorProgram::sltProcessFinished);
+            this, &DapMonitorCmdProgram::sltProcessFinished);
 
     connect(m_process, &QProcess::errorOccurred, [=](QProcess::ProcessError error) {
         qCritical() << "Monitoring process: " << error;
@@ -51,7 +51,7 @@ void DapMonitorProgram::start()
         }
     });
 
-    connect(m_process, &QProcess::readyRead, this, &DapMonitorProgram::sltMonitorParser);
+    connect(m_process, &QProcess::readyRead, this, &DapMonitorCmdProgram::sltMonitorParser);
 
     connect(m_process, &QProcess::started, [=] {
         qInfo() << "Started process network monitor";
@@ -61,7 +61,7 @@ void DapMonitorProgram::start()
     m_process->start(m_name, m_args);
 }
 
-void DapMonitorProgram::stop()
+void DapMonitorCmdProgram::stop()
 {
     m_process->kill();
 }

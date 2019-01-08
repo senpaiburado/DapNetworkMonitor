@@ -24,11 +24,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     DapNetworkMonitorAbstract.cpp \
-    DapMonitorProgram.cpp
+    DapMonitorCmdProgram.cpp
 HEADERS += \
     DapNetworkMonitor.h \
     DapNetworkMonitorAbstract.h \
-    DapMonitorProgram.h
+    DapMonitorCmdProgram.h
 
 win32 {
 SOURCES += DapNetworkMonitorWindows.cpp

@@ -1,7 +1,7 @@
 #include "DapNetworkMonitorLinux.h"
 
 DapNetworkMonitorLinux::DapNetworkMonitorLinux(QObject *parent):
-    DapNetworkMonitorAbstract(parent), m_process("ip", {"monitor"}, this)
+    DapNetworkMonitorAbstract(parent), m_cmdProgram("ip", {"monitor"}, this)
 {
 
 }
@@ -32,11 +32,11 @@ bool DapNetworkMonitorLinux::isMonitoringRunning() const
 void DapNetworkMonitorLinux::monitoringStart()
 {
     qDebug() << "Start network monitoring";
-    m_process.start();
+    m_cmdProgram.start();
 }
 
 void DapNetworkMonitorLinux::monitoringStop()
 {
     qDebug() << "Stop network monitoring";
-    m_process.stop();
+    m_cmdProgram.stop();
 }
