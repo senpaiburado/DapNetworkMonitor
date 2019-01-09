@@ -13,9 +13,10 @@ void DapMonitorCmdProgram::sltProcessFinished()
     qDebug() << "sltProcessFinished";
     m_isRunning = false;
     m_process->deleteLater();
+    emit sigFinished();
 }
 
-void DapMonitorCmdProgram::sltMonitorParser()
+void DapMonitorCmdProgram::sltReadProgramOutput()
 {
     while (!m_process->atEnd()) {
         qint64 count_bytes = m_process->readLine(m_outputBuffer, MAX_LINE_LENGTH);
@@ -51,10 +52,11 @@ void DapMonitorCmdProgram::start()
         }
     });
 
-    connect(m_process, &QProcess::readyRead, this, &DapMonitorCmdProgram::sltMonitorParser);
+    connect(m_process, &QProcess::readyRead, this, &DapMonitorCmdProgram::sltReadProgramOutput);
 
     connect(m_process, &QProcess::started, [=] {
         qInfo() << "Started process network monitor";
+        emit sigStarted();
         m_isRunning = true;
     });
 

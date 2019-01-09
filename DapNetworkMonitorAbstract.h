@@ -14,7 +14,7 @@ protected:
     QString m_tunnelDestination;
     QString m_serverAddress;
 
-    bool m_isMonitoringRunning;
+    bool m_isMonitoringRunning = false;
 public:
     explicit DapNetworkMonitorAbstract(QObject *parent = Q_NULLPTR);
 
@@ -23,7 +23,7 @@ public:
     virtual bool isTunDriverInstalled() const = 0;
     virtual bool isDapGatewayDefined() const = 0;
     virtual bool isOthersGatewayDefined() const = 0;
-    virtual bool isMonitoringRunning() const = 0;
+    virtual bool isMonitoringRunning() const final { return m_isMonitoringRunning; }
 
 signals:
     void sigRouteChanged();

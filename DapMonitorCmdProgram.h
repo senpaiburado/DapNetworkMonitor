@@ -22,14 +22,14 @@ public:
     bool isProgramRunning() { return m_isRunning; }
 signals:
     // split output console program by lines
-    void sigProgramOutput(QString line);
+    void sigProgramOutput(const QString& cmdOutLine);
 
     void sigStarted();
     void sigFinished();
     void sigStartError();
 private slots:
     void sltProcessFinished();
-    void sltMonitorParser();
+    void sltReadProgramOutput();
 public slots:
     void start();
     void stop();
