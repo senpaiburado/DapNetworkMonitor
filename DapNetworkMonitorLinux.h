@@ -15,8 +15,6 @@ public:
     bool isTunDriverInstalled() const override;
     bool isDapGatewayDefined() const override;
     bool isOthersGatewayDefined() const override;
-
-    bool isMonitoringRunning() const override;
 signals:
 
 public slots:

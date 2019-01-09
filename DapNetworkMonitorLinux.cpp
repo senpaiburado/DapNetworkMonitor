@@ -23,12 +23,6 @@ bool DapNetworkMonitorLinux::isOthersGatewayDefined() const
     return false;
 }
 
-bool DapNetworkMonitorLinux::isMonitoringRunning() const
-{
-    // TODO
-    return false;
-}
-
 void DapNetworkMonitorLinux::monitoringStart()
 {
     qDebug() << "Start network monitoring";
