@@ -42,8 +42,8 @@ public slots:
     void sltSetServerAddress(const QString& servAddr) { m_serverAddress = servAddr; }
     void sltSetTunnelDestination(const QString& tunDest) { m_tunnelDestination = tunDest; }
 
-    virtual void monitoringStart() = 0;
-    virtual void monitoringStop() = 0;
+    virtual bool  monitoringStart() = 0;
+    virtual bool  monitoringStop() = 0;
 };
 
 
