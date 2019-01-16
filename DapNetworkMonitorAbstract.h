@@ -36,12 +36,16 @@ public:
 
 signals:
     void sigRouteChanged();
-    void sigOtherGatewayDefined();
+    void sigOtherGatewayDefined(const QString& gateway);
     void sigOtherGatewayUndefined();
     void sigTunGatewayDefined();
     void sigTunGatewayUndefined();
     void sigUpstreamRouteDefined();
     void sigUpstreamRouteUndefined();
+    void sigUpstreamRouteGatewayUndefined();
+
+    void sigInterfaceUndefined();
+    void sigInterfaceDefined();
 
     void sigMonitoringFinished();
     void sigMonitoringStarted();

@@ -9,6 +9,11 @@ void DapNetworkMonitorLinux::cbMonitorNotification(const dap_network_notificatio
                     .arg((notification.type == IP_ADDR_ADD ? "now" : "no longer"))
                     .arg(notification.addr.s_ip);
 
+        if(notification.type == IP_ADDR_ADD)
+            emit instance()->sigInterfaceDefined();
+        else
+            emit instance()->sigInterfaceUndefined();
+
     } else if(notification.type == IP_ROUTE_ADD || notification.type == IP_ROUTE_REMOVE) {
         emit instance()->sigRouteChanged();
 
@@ -38,7 +43,6 @@ void DapNetworkMonitorLinux::cbMonitorNotification(const dap_network_notificatio
                     emit instance()->sigUpstreamRouteUndefined();
                 }
             }
-
         } else  if (notification.type == IP_ROUTE_ADD) {
             if(notification.route.destination_address == DAP_ADRESS_UNDEFINED &&
                     notification.route.gateway_address != DAP_ADRESS_UNDEFINED) {
@@ -49,7 +53,7 @@ void DapNetworkMonitorLinux::cbMonitorNotification(const dap_network_notificatio
                     emit instance()->sigTunGatewayDefined();
                 } else {
                     qInfo() << "Other gateway is defined";
-                    emit instance()->sigOtherGatewayUndefined();
+                    emit instance()->sigOtherGatewayDefined(gatewayAddr);
                 }
             } else if(notification.route.destination_address != DAP_ADRESS_UNDEFINED &&
                       notification.route.gateway_address != DAP_ADRESS_UNDEFINED) {
