@@ -10,8 +10,8 @@ public:
     explicit DapNetworkMonitorWindows(QObject *parent = Q_NULLPTR);
 
     bool isTunDriverInstalled() const override;
-    bool isDapGatewayDefined() const override;
-    bool isOthersGatewayDefined() const override;
+    bool isTunGatewayDefined() const override;
+    bool isOtherGatewayDefined() const override;
     bool monitoringStart() override;
     bool monitoringStop() override;
 

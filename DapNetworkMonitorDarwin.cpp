@@ -12,12 +12,12 @@ bool DapNetworkMonitorDarwin::isTunDriverInstalled() const
     return false;
 }
 
-bool DapNetworkMonitorDarwin::isDapGatewayDefined() const
+bool DapNetworkMonitorDarwin::isTunGatewayDefined() const
 {
     // TODO
     return false;
 }
-bool DapNetworkMonitorDarwin::isOthersGatewayDefined() const
+bool DapNetworkMonitorDarwin::isOtherGatewayDefined() const
 {
     // TODO
     return false;

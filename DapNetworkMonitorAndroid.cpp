@@ -12,12 +12,12 @@ bool DapNetworkMonitorAndroid::isTunDriverInstalled() const
     return false;
 }
 
-bool DapNetworkMonitorAndroid::isDapGatewayDefined() const
+bool DapNetworkMonitorAndroid::isTunGatewayDefined() const
 {
     // TODO
     return false;
 }
-bool DapNetworkMonitorAndroid::isOthersGatewayDefined() const
+bool DapNetworkMonitorAndroid::isOtherGatewayDefined() const
 {
     // TODO
     return false;

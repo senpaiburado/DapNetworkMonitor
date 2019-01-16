@@ -12,12 +12,12 @@ bool DapNetworkMonitorWindows::isTunDriverInstalled() const
     return false;
 }
 
-bool DapNetworkMonitorWindows::isDapGatewayDefined() const
+bool DapNetworkMonitorWindows::isTunGatewayDefined() const
 {
     // TODO
     return false;
 }
-bool DapNetworkMonitorWindows::isOthersGatewayDefined() const
+bool DapNetworkMonitorWindows::isOtherGatewayDefined() const
 {
     // TODO
     // Add checking all needed parameters for successful monitoring

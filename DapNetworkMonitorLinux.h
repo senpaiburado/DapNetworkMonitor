@@ -10,6 +10,7 @@ class DapNetworkMonitorLinux : public DapNetworkMonitorAbstract
 {
     Q_OBJECT
 private:
+
     static void cbMonitorNotification(const dap_network_notification_t notification);
 
     DapNetworkMonitorLinux(QObject *parent = Q_NULLPTR);
@@ -20,14 +21,11 @@ public:
         {static DapNetworkMonitorLinux client; return &client;}
 
     bool isTunDriverInstalled() const override;
-    bool isDapGatewayDefined() const override;
-    bool isOthersGatewayDefined() const override;
-
 signals:
 
 public slots:
-    void monitoringStart() override;
-    void monitoringStop() override;
+    bool monitoringStart() override;
+    bool monitoringStop() override;
 };
 
 #endif // NETWORKMONITORLINUX_H
