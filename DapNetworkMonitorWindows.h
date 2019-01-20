@@ -10,11 +10,13 @@ public:
     explicit DapNetworkMonitorWindows(QObject *parent = Q_NULLPTR);
 
     bool isTunDriverInstalled() const override;
-    bool isTunGatewayDefined() const override;
-    bool isOtherGatewayDefined() const override;
+    bool isTunGatewayDefined() const;
+    bool isOtherGatewayDefined() const;
     bool monitoringStart() override;
     bool monitoringStop() override;
-
+    static DapNetworkMonitorWindows* instance() {
+        static DapNetworkMonitorWindows client; return &client;
+    }
 signals:
 
 public slots:
