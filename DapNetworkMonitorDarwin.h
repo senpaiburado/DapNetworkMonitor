@@ -6,17 +6,25 @@
 class DapNetworkMonitorDarwin : public DapNetworkMonitorAbstract
 {
     Q_OBJECT
+private:
+
+    DapNetworkMonitorDarwin(QObject *parent = Q_NULLPTR);
+    DapNetworkMonitorDarwin(const DapNetworkMonitorDarwin&) = delete;
+    DapNetworkMonitorDarwin& operator=(const DapNetworkMonitorDarwin&) = delete;
+
+    bool isTunGatewayDefined() const;
+    bool isOtherGatewayDefined() const;
+
 public:
-    explicit DapNetworkMonitorDarwin(QObject *parent = Q_NULLPTR);
+    static DapNetworkMonitorDarwin* instance()
+        {static DapNetworkMonitorDarwin client; return &client;}
 
     bool isTunDriverInstalled() const override;
-    bool isTunGatewayDefined() const override;
-    bool isOtherGatewayDefined() const override;
-    bool monitoringStart() override;
-    bool monitoringStop() override;
 signals:
 
 public slots:
+    bool monitoringStart() override;
+    bool monitoringStop() override;
 };
 
 #endif // NETWORKMONITORMACOS_H
