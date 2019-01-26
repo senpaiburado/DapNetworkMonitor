@@ -27,7 +27,6 @@ public:
 
 private:
     QString parsedPath;
-    QObject *parentForMonitor;
     QProcess *m_monitorProcess;
     QMutex m_mutex;
     bool m_isMonitorActive;

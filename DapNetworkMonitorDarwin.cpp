@@ -9,7 +9,7 @@ DapNetworkMonitorDarwin::DapNetworkMonitorDarwin(QObject *parent):
     QString monitorProgramName = "route";
     QStringList monitorProgramArgs; monitorProgramArgs << "monitor";
 
-    m_monitorProcess = new QProcess(parentForMonitor);
+    m_monitorProcess = new QProcess(this);
     m_monitorProcess->setProcessChannelMode(QProcess::MergedChannels);
 
 
