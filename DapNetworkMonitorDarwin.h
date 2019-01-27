@@ -13,10 +13,8 @@ private:
     DapNetworkMonitorDarwin(const DapNetworkMonitorDarwin&) = delete;
     DapNetworkMonitorDarwin& operator=(const DapNetworkMonitorDarwin&) = delete;
 
-    bool isTunGatewayDefined() const;
-    bool isOtherGatewayDefined() const;
-    void setMonitorActive(bool a_isActive);
-    bool getMonitorActive();
+    bool isTunGatewayDefinedInnerCheck() const;
+    bool isOtherGatewayDefinedInnerCheck() const;
 
 public:
     static DapNetworkMonitorDarwin* instance()
@@ -26,10 +24,8 @@ public:
     void monitorParser(QString monOut);
 
 private:
-    QString parsedPath;
+    QString m_parsedPath;
     QProcess *m_monitorProcess;
-    QMutex m_mutex;
-    bool m_isMonitorActive;
 
 signals:
 

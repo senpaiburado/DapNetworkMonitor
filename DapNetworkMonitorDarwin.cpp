@@ -4,8 +4,6 @@
 DapNetworkMonitorDarwin::DapNetworkMonitorDarwin(QObject *parent):
     DapNetworkMonitorAbstract(parent)
 {
-    m_isMonitorActive = false;
-
     QString monitorProgramName = "route";
     QStringList monitorProgramArgs; monitorProgramArgs << "monitor";
 
@@ -27,7 +25,7 @@ DapNetworkMonitorDarwin::DapNetworkMonitorDarwin(QObject *parent):
     connect(m_monitorProcess, &QProcess::readyReadStandardOutput, this, [=] {
         QString strRead(m_monitorProcess->readAllStandardOutput());
 
-        if (!getMonitorActive())
+        if (!isMonitoringRunning())
             return;
 
         QStringList cmds = strRead.split("\n");
@@ -49,78 +47,77 @@ bool DapNetworkMonitorDarwin::isTunDriverInstalled() const
 
 bool DapNetworkMonitorDarwin::monitoringStart()
 {
-    setMonitorActive(true);
-    return getMonitorActive();
+    m_isMonitoringRunning = true;
+    return m_isMonitoringRunning;
 }
 bool DapNetworkMonitorDarwin::monitoringStop()
 {
-    setMonitorActive(false);
-    return getMonitorActive();
+    m_isMonitoringRunning = false;
+    return m_isMonitoringRunning;
 }
 
 void DapNetworkMonitorDarwin::monitorParser(QString monOut)
 {
     QStringList res = monOut.split(" ");
     //qDebug() << "res " << res ;
-    //qDebug() << "monOut " << monOut ;
 
     if( monOut == ""){
         //qDebug() << "Parsed path ends";
-        parsedPath = "";
+        m_parsedPath = "";
     }
 
-    if( parsedPath == "" ){ /// Parser start
+    if( m_parsedPath == "" ){ /// Parser start
         if( ( res[0] == "got" ) && ( res[1] == "message" ) ){
-            parsedPath = "got_message";
+            m_parsedPath = "got_message";
             //qDebug() << "Parsed path "<< parsedPath;
         }
-    }else if( parsedPath == "got_message" ){ /// got message from route monitor
+    }else if( m_parsedPath == "got_message" ){ /// got message from route monitor
     //qDebug() << "monOut = "<<monOut;
         if( res[0] == "RTM_GET:" ){
-            parsedPath = "got_message_rtm_get";
+            m_parsedPath = "got_message_rtm_get";
             //qDebug() << "Parsed path "<< parsedPath;
         }else if( res[0] == "RTM_DELETE:" ){
-            parsedPath = "got_message_rtm_delete";
+            m_parsedPath = "got_message_rtm_delete";
             //qDebug() << "Parsed path "<< parsedPath;
             if( monOut.contains("GATEWAY") ){
-                parsedPath = "got_message_rtm_delete_gateway";
+                m_parsedPath = "got_message_rtm_delete_gateway";
                 //qDebug() << "Parsed path "<< parsedPath;
             }
         }else if( res[0] == "RTM_ADD:" ){
-            parsedPath = "got_message_rtm_add";
+            m_parsedPath = "got_message_rtm_add";
             //qDebug() << "Parsed path "<< parsedPath;
             if( monOut.contains("GATEWAY") ){
-                parsedPath = "got_message_rtm_add_gateway";
+                m_parsedPath = "got_message_rtm_add_gateway";
                 //qDebug() << "Parsed path "<< parsedPath;
             }else if (monOut.contains("HOST")){
-                parsedPath = "got_message_rtm_add_route";
+                m_parsedPath = "got_message_rtm_add_route";
                 //qDebug() << "Parsed path "<< parsedPath;
             }
         }else if( res[0].left(4) == "RTM_"){
-            parsedPath = "rtm_smth";
+            m_parsedPath = "rtm_smth";
             //qDebug() << "Parsed path "<< parsedPath;
         }else
             qWarning() << "Unknown message ";
 
-    }else if( parsedPath == "got_message_rtm_add_gateway") {  /// RTM_ADD_GATEWAY
+    }else if( m_parsedPath == "got_message_rtm_add_gateway") {  /// RTM_ADD_GATEWAY
         if ( res[0] == "sockaddrs:" ){
-            parsedPath = "got_message_rtm_add_gateway_sockaddr";
+            m_parsedPath = "got_message_rtm_add_gateway_sockaddr";
             //qDebug() << "Parsed path "<< parsedPath;
             if( res[1].contains("GATEWAY") ){
-                parsedPath = "got_message_rtm_add_gateway_sockaddr_gateway";
+                m_parsedPath = "got_message_rtm_add_gateway_sockaddr_gateway";
                 //qDebug() << "Parsed path "<< parsedPath;
             }
         }
-    }else if( parsedPath == "got_message_rtm_add_route") {  /// RTM_ADD_GATEWAY
+    }else if( m_parsedPath == "got_message_rtm_add_route") {  /// RTM_ADD_GATEWAY
         if ( res[0] == "sockaddrs:" ){
-            parsedPath = "got_message_rtm_add_route_sockaddr";
+            m_parsedPath = "got_message_rtm_add_route_sockaddr";
             //qDebug() << "Parsed path "<< parsedPath;
             if( res[1].contains("GATEWAY") ){
-                parsedPath = "got_message_rtm_add_route_sockaddr_gateway";
+                m_parsedPath = "got_message_rtm_add_route_sockaddr_gateway";
                 //qDebug() << "Parsed path "<< parsedPath;
             }
         }
-    }else if( parsedPath == "got_message_rtm_add_gateway_sockaddr_gateway"){ /// RTM_ADD_GATEWAY  sockaddr
+    }else if( m_parsedPath == "got_message_rtm_add_gateway_sockaddr_gateway"){ /// RTM_ADD_GATEWAY  sockaddr
         if( res[0] == ""){
             if( res[1] == "default" ){
                 qInfo()<< "add default gateway "<<res[2];
@@ -132,7 +129,7 @@ void DapNetworkMonitorDarwin::monitorParser(QString monOut)
                 qDebug() << "add upstream gateway, res = "<< res;
             }
         }
-    }else if( parsedPath == "got_message_rtm_add_route_sockaddr_gateway"){ /// RTM_ADD_GATEWAY  sockaddr
+    }else if( m_parsedPath == "got_message_rtm_add_route_sockaddr_gateway"){ /// RTM_ADD_GATEWAY  sockaddr
         if( res[0] == ""){
             if( res[1] == m_tunnelGateway)
                 if ( res[2] == m_tunnelDestination ){
@@ -140,42 +137,44 @@ void DapNetworkMonitorDarwin::monitorParser(QString monOut)
                     emit sigUpstreamRouteDefined();
                 }
         }
-    }else if ( parsedPath == "got_message_rtm_delete" ) { /// RTM_DELETE  for single route records
+    }else if ( m_parsedPath == "got_message_rtm_delete" ) { /// RTM_DELETE  for single route records
         if ( res[0] == "sockaddrs:" ){
-            parsedPath = "got_message_rtm_delete_sockaddr";
+            m_parsedPath = "got_message_rtm_delete_sockaddr";
             //qDebug() << "Parsed path "<< parsedPath;
             if( res[1].contains("GATEWAY") && res[1].contains("DST") ){
-                parsedPath = "got_message_rtm_delete_sockaddr_gateway";
+                m_parsedPath = "got_message_rtm_delete_sockaddr_gateway";
                 //qDebug() << "Parsed path "<< parsedPath;
             }
         }
 
-    } else if( parsedPath == "got_message_rtm_delete_gateway") {  /// RTM_DEL_GATEWAY
+    } else if( m_parsedPath == "got_message_rtm_delete_gateway") {  /// RTM_DEL_GATEWAY
         if ( res[0] == "sockaddrs:" ){
-            parsedPath = "got_message_rtm_delete_gateway_sockaddr";
+            m_parsedPath = "got_message_rtm_delete_gateway_sockaddr";
             //qDebug() << "Parsed path "<< parsedPath;
             if( res[1].contains("GATEWAY") && res[1].contains("DST")  ){
-                parsedPath = "got_message_rtm_delete_gateway_sockaddr_gateway";
+                m_parsedPath = "got_message_rtm_delete_gateway_sockaddr_gateway";
                 //qDebug() << "Parsed path "<< parsedPath;
             }
         }
-    }else if( parsedPath == "got_message_rtm_delete_sockaddr_gateway"){ /// RTM_DEL sockaddr gateway
+    }else if( m_parsedPath == "got_message_rtm_delete_sockaddr_gateway"){ /// RTM_DEL sockaddr gateway
         if( res[0] == ""){
             if( res[1] == m_tunnelGateway && res[2] == m_tunnelDestination ){
                 qInfo() << "delete route  " << res[1] << " to " << res[2];
                 emit sigUpstreamRouteUndefined();
             }
         }
-    }else if( parsedPath == "got_message_rtm_delete_gateway_sockaddr_gateway"){ /// RTM_DEL_GATEWAY  sockaddr gateway
+    }else if( m_parsedPath == "got_message_rtm_delete_gateway_sockaddr_gateway"){ /// RTM_DEL_GATEWAY  sockaddr gateway
         if( res[0] == ""){
             //qInfo()<< "delete gateway "<<res[2];
             if( res[1] == "default" ){
                 qInfo()<< "delete default gateway "<<res[2];
-                if ( res[2] == m_tunnelGateway )
+                if ( res[2] == m_tunnelGateway ){
                     emit sigTunGatewayUndefined();
-                else{
-                    if(!isOtherGatewayDefined())
-                        emit sigOtherGatewayUndefined();
+                    emit instance()->sigInterfaceUndefined();
+                }
+                else if(!isOtherGatewayDefinedInnerCheck()){
+                    emit sigOtherGatewayUndefined();
+                    emit instance()->sigInterfaceUndefined();
                 }
             }
         }
@@ -187,7 +186,7 @@ void DapNetworkMonitorDarwin::monitorParser(QString monOut)
  * @brief SapNetworkMonitorDarwin::isOtherGatewayDefined
  * @return
  */
-bool DapNetworkMonitorDarwin::isOtherGatewayDefined() const
+bool DapNetworkMonitorDarwin::isOtherGatewayDefinedInnerCheck() const
 {
     int ret;
     if(m_tunnelGateway.size()>0){
@@ -223,26 +222,11 @@ bool DapNetworkMonitorDarwin::isOtherGatewayDefined() const
     }
 }
 
-void DapNetworkMonitorDarwin::setMonitorActive(bool a_isActive)
-{
-    m_mutex.lock();
-    m_isMonitorActive = a_isActive;
-    m_mutex.unlock();
-}
-
-bool DapNetworkMonitorDarwin::getMonitorActive()
-{
-    m_mutex.lock();
-    bool l_isMonitorActive = m_isMonitorActive;
-    m_mutex.unlock();
-    return l_isMonitorActive;
-}
-
 /**
  * @brief SapNetworkMonitorDarwin::isTunGatewayDefined
  * @return
  */
-bool DapNetworkMonitorDarwin::isTunGatewayDefined() const
+bool DapNetworkMonitorDarwin::isTunGatewayDefinedInnerCheck() const
 {
     int ret;
     if(m_tunnelGateway.size()>0)
