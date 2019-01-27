@@ -125,6 +125,7 @@ void DapNetworkMonitorDarwin::monitorParser(QString monOut)
                     emit sigTunGatewayDefined();
                 else
                     emit sigOtherGatewayDefined(res[2]);
+                emit instance()->sigInterfaceDefined();
             }else if (res[1] == m_serverAddress ){
                 qDebug() << "add upstream gateway, res = "<< res;
             }
