@@ -172,7 +172,7 @@ void DapNetworkMonitorDarwin::monitorParser(QString monOut)
                     emit sigTunGatewayUndefined();
                     emit instance()->sigInterfaceUndefined();
                 }
-                else if(!isOtherGatewayDefinedInnerCheck()){
+                else if(isOtherGatewayDefined() && !isOtherGatewayDefinedInnerCheck()){
                     emit sigOtherGatewayUndefined();
                     emit instance()->sigInterfaceUndefined();
                 }
