@@ -10,7 +10,6 @@ DapNetworkMonitorDarwin::DapNetworkMonitorDarwin(QObject *parent):
     m_monitorProcess = new QProcess(this);
     m_monitorProcess->setProcessChannelMode(QProcess::MergedChannels);
 
-
     connect(m_monitorProcess,&QProcess::started, [=] {
         qInfo() << "Started network monitor";
     });
@@ -35,7 +34,16 @@ DapNetworkMonitorDarwin::DapNetworkMonitorDarwin(QObject *parent):
         }
     });
 
-    m_monitorProcess->start(monitorProgramName, monitorProgramArgs);
+    connect(this, &DapNetworkMonitorAbstract::sigMonitoringStarted, this, [=]{
+        m_monitorProcess->start(monitorProgramName, monitorProgramArgs);
+        //qInfo() << "Start process itself";
+    }, Qt::QueuedConnection);
+
+    connect(this, &DapNetworkMonitorAbstract::sigMonitoringFinished, this, [=]{
+        m_monitorProcess->close();
+        //qInfo() << "Stop process itself";
+    }, Qt::QueuedConnection);
+
 }
 
 bool DapNetworkMonitorDarwin::isTunDriverInstalled() const
@@ -47,12 +55,12 @@ bool DapNetworkMonitorDarwin::isTunDriverInstalled() const
 
 bool DapNetworkMonitorDarwin::monitoringStart()
 {
-    m_isMonitoringRunning = true;
+    emit instance()->sigMonitoringStarted();
     return m_isMonitoringRunning;
 }
 bool DapNetworkMonitorDarwin::monitoringStop()
 {
-    m_isMonitoringRunning = false;
+    emit instance()->sigMonitoringFinished();
     return m_isMonitoringRunning;
 }
 
