@@ -192,7 +192,7 @@ void DapNetworkMonitorDarwin::monitorParser(QString monOut)
 }
 
 /**
- * @brief SapNetworkMonitorDarwin::isOtherGatewayDefined
+ * @brief SapNetworkMonitorDarwin::isOtherGatewayDefinedInnerCheck
  * @return
  */
 bool DapNetworkMonitorDarwin::isOtherGatewayDefinedInnerCheck() const
@@ -232,7 +232,7 @@ bool DapNetworkMonitorDarwin::isOtherGatewayDefinedInnerCheck() const
 }
 
 /**
- * @brief SapNetworkMonitorDarwin::isTunGatewayDefined
+ * @brief SapNetworkMonitorDarwin::isTunGatewayDefinedInnerCheck
  * @return
  */
 bool DapNetworkMonitorDarwin::isTunGatewayDefinedInnerCheck() const
