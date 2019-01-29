@@ -28,6 +28,8 @@ private:
     QProcess *m_monitorProcess;
 
 signals:
+    void sigMonitoringStart();
+    void sigMonitoringFinish();
 
 public slots:
     bool monitoringStart() override;

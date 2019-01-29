@@ -34,12 +34,12 @@ DapNetworkMonitorDarwin::DapNetworkMonitorDarwin(QObject *parent):
         }
     });
 
-    connect(this, &DapNetworkMonitorAbstract::sigMonitoringStarted, this, [=]{
+    connect(this, &DapNetworkMonitorDarwin::sigMonitoringStart, this, [=]{
         m_monitorProcess->start(monitorProgramName, monitorProgramArgs);
         //qInfo() << "Start process itself";
     }, Qt::QueuedConnection);
 
-    connect(this, &DapNetworkMonitorAbstract::sigMonitoringFinished, this, [=]{
+    connect(this, &DapNetworkMonitorDarwin::sigMonitoringFinish, this, [=]{
         m_monitorProcess->close();
         //qInfo() << "Stop process itself";
     }, Qt::QueuedConnection);
@@ -55,12 +55,12 @@ bool DapNetworkMonitorDarwin::isTunDriverInstalled() const
 
 bool DapNetworkMonitorDarwin::monitoringStart()
 {
-    emit instance()->sigMonitoringStarted();
+    emit instance()->sigMonitoringStart();
     return m_isMonitoringRunning;
 }
 bool DapNetworkMonitorDarwin::monitoringStop()
 {
-    emit instance()->sigMonitoringFinished();
+    emit instance()->sigMonitoringFinish();
     return m_isMonitoringRunning;
 }
 
