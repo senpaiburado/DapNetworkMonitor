@@ -2,21 +2,38 @@
 #define NETWORKMONITORMACOS_H
 
 #include "DapNetworkMonitorAbstract.h"
+#include <QProcess>
 
 class DapNetworkMonitorDarwin : public DapNetworkMonitorAbstract
 {
     Q_OBJECT
+private:
+
+    DapNetworkMonitorDarwin(QObject *parent = Q_NULLPTR);
+    DapNetworkMonitorDarwin(const DapNetworkMonitorDarwin&) = delete;
+    DapNetworkMonitorDarwin& operator=(const DapNetworkMonitorDarwin&) = delete;
+
+    bool isTunGatewayDefinedInnerCheck() const;
+    bool isOtherGatewayDefinedInnerCheck() const;
+
 public:
-    explicit DapNetworkMonitorDarwin(QObject *parent = Q_NULLPTR);
+    static DapNetworkMonitorDarwin* instance()
+        {static DapNetworkMonitorDarwin client; return &client;}
 
     bool isTunDriverInstalled() const override;
-    bool isTunGatewayDefined() const override;
-    bool isOtherGatewayDefined() const override;
-    bool monitoringStart() override;
-    bool monitoringStop() override;
+    void monitorParser(QString monOut);
+
+private:
+    QString m_parsedPath;
+    QProcess *m_monitorProcess;
+
 signals:
+    void sigMonitoringStart();
+    void sigMonitoringFinish();
 
 public slots:
+    bool monitoringStart() override;
+    bool monitoringStop() override;
 };
 
 #endif // NETWORKMONITORMACOS_H
