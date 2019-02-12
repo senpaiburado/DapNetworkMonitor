@@ -2,6 +2,7 @@
 #define NETWORKMONITORWINDOWS_H
 
 #include "DapNetworkMonitorAbstract.h"
+#include <QtConcurrent/QtConcurrent>
 
 class DapNetworkMonitorWindows : public DapNetworkMonitorAbstract
 {
@@ -9,11 +10,20 @@ class DapNetworkMonitorWindows : public DapNetworkMonitorAbstract
 public:
     explicit DapNetworkMonitorWindows(QObject *parent = Q_NULLPTR);
 
+    static DapNetworkMonitorWindows *instance() {
+        static DapNetworkMonitorWindows me;
+        return &me;
+    }
+
     bool isTunDriverInstalled() const override;
-    bool isTunGatewayDefined() const override;
-    bool isOtherGatewayDefined() const override;
+    bool isTunGatewayDefined() const;
+    bool isOtherGatewayDefined() const;
     bool monitoringStart() override;
     bool monitoringStop() override;
+
+private:
+    void internalWorker();
+    QMutex mutex;
 
 signals:
 
