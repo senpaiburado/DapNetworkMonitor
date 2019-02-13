@@ -10,8 +10,8 @@ public:
     explicit DapNetworkMonitorAndroid(QObject *parent = Q_NULLPTR);
 
     bool isTunDriverInstalled() const override;
-    bool isTunGatewayDefined() const override;
-    bool isOtherGatewayDefined() const override;
+    bool isTunGatewayDefined() const;
+    bool isOtherGatewayDefined() const;
     bool monitoringStart() override;
     bool monitoringStop() override;
 signals:
